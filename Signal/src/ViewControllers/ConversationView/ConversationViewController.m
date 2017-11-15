@@ -2859,6 +2859,15 @@ typedef NS_ENUM(NSInteger, MessagesRangeSizeMode) {
                 }
                 break;
             }
+            case YapDatabaseViewChangeDelete: {
+                // Discard cached view items after deletes.
+                YapCollectionKey *collectionKey = rowChange.collectionKey;
+                OWSAssert(collectionKey.key.length > 0);
+                if (collectionKey.key) {
+                    [self.viewItemMap removeObjectForKey:collectionKey.key];
+                }
+                break;
+            }
             default:
                 break;
         }
